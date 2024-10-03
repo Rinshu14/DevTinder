@@ -1,8 +1,9 @@
-const e = require('express')
+
 const mongoose = require('mongoose')
 const Validator = require('validator')
-
-const dataValidation=require("../Utils/Validator")
+const dataValidation = require("../Utils/Validator")
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -41,7 +42,10 @@ const userSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ["Male", "Female", "Others"]
+        enum:{ 
+            values:["Male", "Female", "Others"],
+            message:"gender should be Male, Female or Others"
+        }
     },
     age: {
         type: Number,
@@ -49,10 +53,33 @@ const userSchema = mongoose.Schema({
     },
     skills: {
         type: [String],
+    },
+    photoUrl: {
+        type: String,
+        validate: {
+            validator: (value) => {
+                if (!Validator.isURL(value)) throw new Error("Photo url is not valid")
+            }
+        }
     }
 
 }, { timestamps: true }
+
 )
+userSchema.index({emailId:1})
+userSchema.methods.getJwtToken = async function () {
+
+
+
+    let jwtToken = await jwt.sign({ id: this._id }, "Rinshu@14")
+
+    return jwtToken
+}
+
+
+userSchema.methods.isPasswordValid = async function (passwordByUser) {
+    return await bcrypt.compare(passwordByUser, this.password)
+}
 
 
 const Users = mongoose.model("Users", userSchema)
