@@ -4,10 +4,8 @@ const UserAuth = require("../Middlewares/auth")
 const ConnectionRequest = require("../Models/ConnectionRequest")
 const User = require("../Models/Users")
 
-
 router.post("/send/:status/:toUserId", UserAuth, async (req, res) => {
     try {
-
         let fromUserId = req.User._id.toString()
         let toUserId = req.params.toUserId
         let status = req.params.status
@@ -24,7 +22,6 @@ router.post("/send/:status/:toUserId", UserAuth, async (req, res) => {
         //toUser and fromUserId should not be equal
         let connectionRequest = new ConnectionRequest({ fromUserId, toUserId, status })
         await connectionRequest.save();
-
         res.json({
             status: "success",
             data: connectionRequest
@@ -39,10 +36,16 @@ router.post("/review/:status/:requestId", UserAuth, async (req, res) => {
     try {
         let status = req.params.status
         let requestId = req.params.requestId
-        let userId=req.User._id
-
-
-
+        let userId = req.User._id
+        let allowedStatus = ["Accepted", "Rejected"]
+        if (!allowedStatus.includes(status)) throw new Error("invalid status")
+        let connectionRequest = await ConnectionRequest.find({ $and: [{ _id: requestId, status: "Interested", toUserId: userId }] })
+        if (!connectionRequest) throw new Error("invalid request")
+        let fromUser = await User.findById(connectionRequest[0].fromUserId)
+        console.log(fromUser)
+        if (!fromUser) throw new Error("sender not found")
+        let updatedRequest = await ConnectionRequest.findByIdAndUpdate(requestId, { status })
+        res.json({ updatedRequest, message: `Request ${status} successfully` })
     }
     catch (error) {
         res.send(error.message)

@@ -5,11 +5,15 @@ let connectionRequestSchema = new mongoose.Schema({
 
     fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
         required: true,
+
+
     },
     toUserId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'Users'
     },
     status: {
         type: String,
@@ -20,7 +24,7 @@ let connectionRequestSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-connectionRequestSchema.index({fromUserId:1,toUserId:1})
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 })
 
 let ConnectionRequestModel = mongoose.model("ConnectionRequest", connectionRequestSchema)
 

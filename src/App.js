@@ -5,14 +5,20 @@ const User = require("./Models/Users");
 const cookieParser = require("cookie-parser")
 const ProfileRouter = require("./Routers/ProfileRouter")
 const AuthRouter = require("./Routers/AuthRouter")
-const RequestRouter=require("./Routers/RequestRouter")
+const RequestRouter = require("./Routers/RequestRouter")
+const UserRouter = require("./Routers/UserRouter")
+const FeedRouter=require("./Routers/FeedRouter")
 
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(AuthRouter)
 app.use("/profile", ProfileRouter)
-app.use("/request",RequestRouter)
+app.use("/request", RequestRouter)
+app.use("/user", UserRouter)
+app.use(FeedRouter)
+
+
 
 
 app.delete("/deleteUser", async (req, res) => {
@@ -36,12 +42,6 @@ app.use("/", (req, res) => {
 
 })
 
-
-
-
-
-
-
 db().then(() => {
     console.log("connection done")
     app.listen(3000, () => {
@@ -51,3 +51,7 @@ db().then(() => {
     console.log("databse can not be connected")
     console.log(err)
 })
+
+
+
+

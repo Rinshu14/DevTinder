@@ -16,7 +16,7 @@ const ValidateUpdateUserData = (data) => {
         if (data.skills && data.skills.length > 10) throw new Error("skills can not be more than 10")
     }
     catch (error) {
-       throw new Error(error)
+       throw new Error(error.message)
     }
 
 }
