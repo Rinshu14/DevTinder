@@ -9,11 +9,12 @@ router.get("/feed", UserAuth, async (req, res) => {
     try {
 
         let page = (parseInt(req.query.page) > 0) ? parseInt(req.query.page) : 1;
-        let limit = (parseInt(req.query.limit) > 0) ? req.query.limit : 2;
+        let limit = (parseInt(req.query.limit) > 0) ? req.query.limit : 5;
         let skip = (page - 1) * limit
         let loggedInUser = req.User._id
         let data = await ConnectionRequest.find({ $or: [{ fromUserId: loggedInUser }, { toUserId: loggedInUser }] }).populate("fromUserId", "firstName status").populate("toUserId", "firstName").select("fromUserId toUserId")
         let set = new Set()
+        set.add(loggedInUser)
         data.map(item => {
             set.add(item.fromUserId._id)
             set.add(item.toUserId._id)

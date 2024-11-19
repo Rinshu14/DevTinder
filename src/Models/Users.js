@@ -42,14 +42,15 @@ const userSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        enum:{ 
-            values:["Male", "Female", "Others"],
-            message:"gender should be Male, Female or Others"
+        enum: {
+            values: ["Male", "Female", "Others"],
+            message: "gender should be Male, Female or Others"
         }
     },
     age: {
         type: Number,
         min: 18,
+        required:true
     },
     skills: {
         type: [String],
@@ -61,15 +62,22 @@ const userSchema = mongoose.Schema({
                 if (!Validator.isURL(value)) throw new Error("Photo url is not valid")
             }
         }
+    },
+    theme:{
+        type:String,
+        default:"cupcake"
+    },
+    about:{
+        type:String,
     }
 
 }, { timestamps: true }
 
 )
-userSchema.index({emailId:1})
+userSchema.index({ emailId: 1 })
 userSchema.methods.getJwtToken = async function () {
-
-
+    // console.log("in jwt method")
+    // console.log(this._id)
 
     let jwtToken = await jwt.sign({ id: this._id }, "Rinshu@14")
 

@@ -1,6 +1,8 @@
 const express = require("express");
 const db = require("./Config/Database");
 const app = express();
+const cors = require("cors")
+require('dotenv').config();
 const User = require("./Models/Users");
 const cookieParser = require("cookie-parser")
 const ProfileRouter = require("./Routers/ProfileRouter")
@@ -10,13 +12,17 @@ const UserRouter = require("./Routers/UserRouter")
 const FeedRouter=require("./Routers/FeedRouter")
 
 
+
+app.use(cors({origin:"http://localhost:5173",credentials:true}))
 app.use(express.json())
 app.use(cookieParser())
+app.use(express.urlencoded({extended: true}))
 app.use(AuthRouter)
 app.use("/profile", ProfileRouter)
 app.use("/request", RequestRouter)
 app.use("/user", UserRouter)
 app.use(FeedRouter)
+
 
 
 
@@ -28,7 +34,7 @@ app.delete("/deleteUser", async (req, res) => {
         res.send("user deleted")
     }
     catch (error) {
-        console.log(error)
+     //   console.log(error)
         res.status(400).send("something went wrong")
     }
 })
