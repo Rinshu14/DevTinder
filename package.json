@@ -2,10 +2,11 @@
   "name": "devtinder",
   "version": "1.0.0",
   "description": "tinder for devs",
-  "main": "index.js",
+  "main": "src/App.js",
   "scripts": {
     "dev": "nodemon src/App.js",
-    "start": "node src/App.js"
+    "start": "node src/App.js",
+    "start:debug": "nodemon --inspect src/App.js"
   },
   "author": "Rinshu",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.0",
     "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.7",
     "validator": "^13.12.0"
   }
 }

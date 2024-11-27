@@ -43,14 +43,14 @@ const userSchema = mongoose.Schema({
     gender: {
         type: String,
         enum: {
-            values: ["Male", "Female", "Others"],
+            values: ["male", "female", "others"],
             message: "gender should be Male, Female or Others"
         }
     },
     age: {
         type: Number,
         min: 18,
-        required:true
+        required: true
     },
     skills: {
         type: [String],
@@ -63,12 +63,12 @@ const userSchema = mongoose.Schema({
             }
         }
     },
-    theme:{
-        type:String,
-        default:"cupcake"
+    theme: {
+        type: String,
+        default: "light"
     },
-    about:{
-        type:String,
+    about: {
+        type: String,
     }
 
 }, { timestamps: true }
@@ -93,6 +93,13 @@ userSchema.methods.isPasswordValid = async function (passwordByUser) {
     return await bcrypt.compare(passwordByUser, this.password)
 }
 
+userSchema.pre('save', function () {
+   
+    this.emailId = this.emailId.toLowerCase();
+    this.gender = this.gender.toLowerCase();
+    this.theme = this.theme.toLowerCase();
+
+})
 
 const Users = mongoose.model("Users", userSchema)
 
