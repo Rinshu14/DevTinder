@@ -1,15 +1,15 @@
 const express = require("express");
-const db = require("../src/Config/Database");
+const db = require("./Config/Database");
 const app = express();
 const cors = require("cors")
 require('dotenv').config();
-const User = require("../src/Models/Users");
+const User = require("./Models/Users");
 const cookieParser = require("cookie-parser")
-const ProfileRouter = require("../src/Routers/ProfileRouter")
-const AuthRouter = require("../src/Routers/AuthRouter")
-const RequestRouter = require("../src/Routers/RequestRouter")
-const UserRouter = require("../src/Routers/UserRouter")
-const FeedRouter=require("../src/Routers/FeedRouter")
+const ProfileRouter = require("./Routers/ProfileRouter")
+const AuthRouter = require("./Routers/AuthRouter")
+const RequestRouter = require("./Routers/RequestRouter")
+const UserRouter = require("./Routers/UserRouter")
+const FeedRouter=require("./Routers/FeedRouter")
 
 
 
