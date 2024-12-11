@@ -4,9 +4,9 @@
   "description": "tinder for devs",
   "main": "src/App.js",
   "scripts": {
-    "dev": "nodemon src/App.js",
-    "start": "node src/App.js",
-    "start:debug": "nodemon --inspect src/App.js"
+    "dev": "nodemon api/App.js",
+    "start": "node api/App.js",
+    "start:debug": "nodemon --inspect api/App.js"
   },
   
   "author": "Rinshu",
