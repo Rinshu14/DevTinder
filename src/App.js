@@ -27,30 +27,26 @@ app.use(FeedRouter)
 
 
 
-app.delete("/deleteUser", async (req, res) => {
+// app.delete("/deleteUser", async (req, res) => {
 
-    try {
-        await User.deleteOne({ emailId: req.query.emailId })
-        res.send("user deleted")
-    }
-    catch (error) {
-     //   console.log(error)
-        res.status(400).send("something went wrong")
-    }
-})
+//     try {
+//         await User.deleteOne({ emailId: req.query.emailId })
+//         res.send("user deleted")
+//     }
+//     catch (error) {
+//      //   console.log(error)
+//         res.status(400).send("something went wrong")
+//     }
+// })
 
-
-
-
-app.use("/", (req, res) => {
-    res.status(400).send("hello world")
+const port=process.env.PORT
 
 
-})
+
 
 db().then(() => {
     console.log("connection done")
-    app.listen(3000, () => {
+    app.listen(port, () => {
         console.log("server started");
     });
 }).catch((err) => {

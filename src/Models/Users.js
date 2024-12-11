@@ -76,10 +76,9 @@ const userSchema = mongoose.Schema({
 )
 userSchema.index({ emailId: 1 })
 userSchema.methods.getJwtToken = async function () {
-    // console.log("in jwt method")
-    // console.log(this._id)
+  
 
-    let jwtToken = await jwt.sign({ id: this._id }, "Rinshu@14")
+    let jwtToken = await jwt.sign({ id: this._id }, process.env.JWTPRIVATEKEY)
 
     return jwtToken
 }
