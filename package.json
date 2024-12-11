@@ -8,6 +8,7 @@
     "start": "node src/App.js",
     "start:debug": "nodemon --inspect src/App.js"
   },
+  
   "author": "Rinshu",
   "license": "ISC",
   "dependencies": {
